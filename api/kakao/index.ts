@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { exec } from 'child-process-async';
+import { ZigbangHouseDetails } from '../zigbang';
 
 interface RefreshTokenReqBody {
     grant_type: string,
@@ -96,27 +97,35 @@ export const getFriendsList = async (): Promise<Friend[]> => {
         offset: 0,
         limit: 10,
     };
-    const friendsList = (await getKakaoApi<FriendListResBody>('https://kapi.kakao.com/v1/api/talk/friends', body)).data.elements;
-
-    return friendsList ?? [];
+    const res = await getKakaoApi<FriendListResBody>('https://kapi.kakao.com/v1/api/talk/friends', body);
+    if (res) {
+        return res.data.elements;
+    }
+    return [];
 }
 
-export const sendMessageToMySelf = async (text: string, link: string) => {
+export const sendMessageToMySelf = async (houseData: ZigbangHouseDetails, link: string) => {
     const body = {
         object_type:"text",
-        text,
+        text: `${houseData.title}\n
+        평수: ${houseData.전용면적.p}\n
+        월세/보증금: ${houseData.rent}/${houseData.deposit}\n
+        업로드 시각: ${houseData.reg_date.replace('T', ' ').split('+')[0]}`,
         link:{ mobile_web_url: link }
     };
     await postKakaoApi('https://kapi.kakao.com/v2/api/talk/memo/default/send', body);
 }
 
-export const sendMessageToFriends = async (uuids: string[], text: string, link: string) => {
+export const sendMessageToFriends = async (uuids: string[], houseData: ZigbangHouseDetails, link: string) => {
     const trimmedUuids = uuids.slice(0, 5); // max 5
     const body = {
         receiver_uuids: trimmedUuids,
         template_object:{
             object_type:"text",
-            text,
+            text: `${houseData.title}\n
+            평수: ${houseData.전용면적.p}\n
+            월세/보증금: ${houseData.rent}/${houseData.deposit}\n
+            업로드 시각: ${houseData.reg_date.replace('T', ' ').split('+')[0]}`,
             link:{ mobile_web_url: link }
         },
     };

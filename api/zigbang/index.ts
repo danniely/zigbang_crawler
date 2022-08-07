@@ -12,7 +12,7 @@ interface ZigbangHouseListResBody {
     agents: any[],
     hasNoFiltered: boolean,
 }
-interface ZigbangHouseDetails {
+export interface ZigbangHouseDetails {
     section_type: string,
     item_id: number,
     images_thumbnail: number,

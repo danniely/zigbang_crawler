@@ -4,15 +4,14 @@ import path from "path";
 import { eachBatch } from './cron';
 
 const app = express()
-const port = 3000
+const port = 5000
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 })
 
-app.get('/house', (req, res) => {
-  const result = eachBatch();
-  result.then((result) => res.send('house: ' + JSON.stringify(result))).catch((err) => res.send(err));
+app.get('/house', async (req, res) => {
+  await eachBatch();
 })
 
 app.listen(port, () => {
