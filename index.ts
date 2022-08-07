@@ -14,7 +14,7 @@ app.get('/house', async (req, res) => {
   await eachBatch();
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT || 5000)(port, () => {
     dotenv.config({ path: path.join(__dirname, ".env") });
     console.log(`Example app listening on port ${port}`);
 })

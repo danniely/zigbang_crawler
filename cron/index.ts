@@ -13,7 +13,7 @@ export const eachBatch = async () => {
     }
 }
 
-cron.schedule('*/5 * * * *', async () => {
+cron.schedule('* * * * *', async () => {
     try {
         await eachBatch();
     } catch (err) {
