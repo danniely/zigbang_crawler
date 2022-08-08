@@ -13,11 +13,14 @@ export const eachBatch = async () => {
     }
 }
 
-cron.schedule('* * * * *', async () => {
-    try {
-        await eachBatch();
-    } catch (err) {
-        console.log(err);
+export const batch = cron.schedule('* * * * *', async () => {
+        try {
+            await eachBatch();
+        } catch (err) {
+            console.log(err);
+        }
+        console.log('batch run: ' + JSON.stringify(new Date()));
+    }, {
+        scheduled: false
     }
-    console.log('batch run: ' + JSON.stringify(new Date()));
-})
+);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { exec } from 'child-process-async';
-import { ZigbangHouseDetails } from '../zigbang';
+import type { ZigbangHouseDetails } from '../zigbang/types';
 
 interface RefreshTokenReqBody {
     grant_type: string,
