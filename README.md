@@ -1,2 +1,2 @@
 # zigbang_crawler
-직방에서 최신 오피스텔들을 카톡으로 바로 받아볼수 있게하는 크롤링 레포입니다
+This is a crawling report that allows you to instantly receive the latest officetels from Zigbang via KakaoTalk.
